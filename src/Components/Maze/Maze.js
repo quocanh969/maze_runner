@@ -46,6 +46,15 @@ export default class Maze extends Component {
             mode: newMode,
         })
     }
+    handleRestartClick() {
+        this.setState({
+            mode: 1, // 0 - normal point,1 - Add start point, 2 - Add end point, 3 - Add obstacles
+            board: Array(100).fill(-1),
+            start: -1,
+            end: -1,
+            obstacles: [],
+        })
+    }
     render() {
         const {mode} = this.state;
         return (
@@ -54,6 +63,7 @@ export default class Maze extends Component {
                     <button onClick={() => {this.handleChangeMode(1)}}>Add start point</button>
                     <button onClick={() => {this.handleChangeMode(3)}}>Add obstacles</button>
                     <button onClick={() => {this.handleChangeMode(2)}}>Add end point</button>
+                    <button onClick={() => {this.handleRestartClick()}}>Restart</button>
                     <button>Path finding start</button>
                 </div>
                 <div className='maze-runner-mode-label'>Mode: {mode === 1 ? 'Add start point' : (mode === 2 ? 'Add end point' : 'Add obstacle')}</div>
