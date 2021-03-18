@@ -2,7 +2,7 @@
   display: grid;
   place-items: center;
 
-  min-height: calc(100vh - 21px);
+  min-height: calc(100vh - 42px);
 }
 
 .maze-runner-btn-group {
@@ -11,4 +11,8 @@
   
   display: flex;
   justify-content: space-between;
+}
+
+.maze-runner-mode-label {
+  text-align: center;
 }

@@ -1,17 +1,10 @@
 import './App.css';
-import Board from './Components/Board/Board';
+import Maze from './Components/Maze/Maze';
 
 function App() {
   return (
     <div>
-      <div className='maze-runner-btn-group'>
-        <button>Start point</button>
-        <button>Path finding start</button>
-        <button>End point</button>
-      </div>
-      <div className='maze-runner-grid'>
-        <Board></Board>
-      </div>
+      <Maze></Maze>
     </div>
   );
 }

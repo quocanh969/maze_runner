@@ -4,4 +4,18 @@
 
     width: 30px;
     height: 30px;
+
+    cursor: pointer;
+}
+
+.maze-runner-cell-start {
+    background-color: green;
+}
+
+.maze-runner-cell-end {
+    background-color: red;
+}
+
+.maze-runner-cell-obstacle {
+    background-color: gray;
 }
