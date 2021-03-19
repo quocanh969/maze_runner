@@ -14,7 +14,7 @@ export default class Board extends Component {
             var cells = [];
             for(let j = 0; j< constant.MAZE_RUNNER_COL; j++) {
                 cells.push(
-                    <Cells key={j+i*constant.MAZE_RUNNER_COL} handleCellClick={this.props.handleCellClick} index={j+i*constant.MAZE_RUNNER_COL} mode={this.props.board[i*constant.MAZE_RUNNER_COL+j]}></Cells>
+                    <Cells key={j+i*constant.MAZE_RUNNER_COL} index={j+i*constant.MAZE_RUNNER_COL}></Cells>
                 )
             }
             content.push(

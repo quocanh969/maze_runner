@@ -6,7 +6,7 @@ export default class Maze extends Component {
         super(props);
 
         this.state = {
-            mode: 1, // 0 - normal point,1 - Add start point, 2 - Add end point, 3 - Add obstacles
+            mode: 1, // 0 - normal point,1 - Add start point, 2 - Add end point, 3 - Add obstacles, 4 - visited
             board: Array(100).fill(-1),
             start: -1,
             end: -1,

@@ -1,18 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './Cells.css';
+import { addStartPoint, addEndPoint } from '../../Actions/index';
 
-export default class Cells extends Component {
+class CellsComponent extends Component {
     constructor(props) {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
     }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     const { board, index } = this.props;
+    //     const nextBoard = nextProps.board;
+
+    //     if(board[index] != nextBoard[index]) return true;
+    //     return false;
+    // }
+
+    componentDidUpdate() {
+        console.log("haha");
+    }
+
     handleClick() {
-        this.props.handleCellClick(this.props.index);
+        const { mode, index, onAddEnd, onAddStart } = this.props;
+        switch(mode) {
+            case 1: {
+                onAddStart(index);
+                break;
+            }
+            case 2: {
+                onAddEnd(index);
+                break;
+            }
+            default: break;
+        }
+
     }
     render() {
+        const { board, index } = this.props;
         var modeClass = '';
-        switch(this.props.mode) {
+        switch(board[index]) {
             case 0: {
                 modeClass = '';
                 break;
@@ -38,3 +66,25 @@ export default class Cells extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return state;
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddStart: index => {
+            dispatch(addStartPoint(index));
+        },
+        onAddEnd: index => {
+            dispatch(addEndPoint(index));
+        }
+    }
+}
+
+const Cells = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CellsComponent);
+
+export default Cells;
