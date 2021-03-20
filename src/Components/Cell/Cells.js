@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Cells.css';
-import { addStartPoint, addEndPoint } from '../../Actions/index';
+import { addStartPoint, addEndPoint, addObstacle } from '../../Actions/index';
 
 class CellsComponent extends Component {
     constructor(props) {
@@ -10,20 +10,15 @@ class CellsComponent extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     const { board, index } = this.props;
-    //     const nextBoard = nextProps.board;
-
-    //     if(board[index] != nextBoard[index]) return true;
-    //     return false;
-    // }
-
-    componentDidUpdate() {
-        console.log("haha");
+    shouldComponentUpdate(nextProps, nextState) {
+        const { board, index } = this.props;
+        const nextBoard = nextProps.board;
+        if(board[index] !== nextBoard[index]) return true;
+        return false;
     }
 
     handleClick() {
-        const { mode, index, onAddEnd, onAddStart } = this.props;
+        const { mode, index, onAddEnd, onAddStart, onAddObstacle } = this.props;
         switch(mode) {
             case 1: {
                 onAddStart(index);
@@ -31,6 +26,10 @@ class CellsComponent extends Component {
             }
             case 2: {
                 onAddEnd(index);
+                break;
+            }
+            case 3: {
+                onAddObstacle(index);
                 break;
             }
             default: break;
@@ -78,6 +77,9 @@ const mapDispatchToProps = dispatch => {
         },
         onAddEnd: index => {
             dispatch(addEndPoint(index));
+        },
+        onAddObstacle: index => {
+            dispatch(addObstacle(index));
         }
     }
 }

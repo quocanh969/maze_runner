@@ -1,76 +1,60 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Board from '../Board/Board';
 
-export default class Maze extends Component {
-    constructor(props) {
-        super(props);
+import constant from '../../Constants/Config';
+import {restart, changeMode} from '../../Actions/index';
 
-        this.state = {
-            mode: 1, // 0 - normal point,1 - Add start point, 2 - Add end point, 3 - Add obstacles, 4 - visited
-            board: Array(100).fill(-1),
-            start: -1,
-            end: -1,
-            obstacles: [],
-        }
+class MazeComponent extends Component {
 
-    }
-
-    handleCellClick(index) {
-
-        if(this.state.board[index] === this.state.mode) {
-            this.state.board[index] = -1;
-        } else {
-            this.state.board[index] = this.state.mode;
-        }
-        
-        this.state.obstacles.push(index);
-
-        if(this.state.mode === 1) {
-            // start point adding
-            this.state.board[this.state.start] = 0;
-            this.setState({
-                start: index,
-            })   
-        } else if(this.state.mode === 2) {
-            // start point adding
-            this.state.board[this.state.end] = 0;
-            this.setState({
-                end: index,
-            })
-        } else {
-            this.forceUpdate();
-        }
-    }
     handleChangeMode(newMode) {
-        this.setState({
-            mode: newMode,
-        })
+        const { onChangeMode } = this.props;
+        onChangeMode(newMode);
     }
     handleRestartClick() {
-        this.setState({
-            mode: 1, // 0 - normal point,1 - Add start point, 2 - Add end point, 3 - Add obstacles
-            board: Array(100).fill(-1),
-            start: -1,
-            end: -1,
-            obstacles: [],
-        })
+        const { onRestartClick } = this.props;
+
+        onRestartClick();
     }
     render() {
-        const {mode} = this.state;
+        const {board, mode} = this.props;
+        const {MODE} = constant
         return (
             <div>
                 <div className='maze-runner-btn-group'>
-                    <button onClick={() => {this.handleChangeMode(1)}}>Add start point</button>
-                    <button onClick={() => {this.handleChangeMode(3)}}>Add obstacles</button>
-                    <button onClick={() => {this.handleChangeMode(2)}}>Add end point</button>
+                    <button onClick={() => {this.handleChangeMode(MODE.START)}}>Add start point</button>
+                    <button onClick={() => {this.handleChangeMode(MODE.OBSTACLE)}}>Add obstacles</button>
+                    <button onClick={() => {this.handleChangeMode(MODE.END)}}>Add end point</button>
                     <button onClick={() => {this.handleRestartClick()}}>Restart</button>
                     <button>Path finding start</button>
                 </div>
                 <div className='maze-runner-mode-label'>Mode: {mode === 1 ? 'Add start point' : (mode === 2 ? 'Add end point' : 'Add obstacle')}</div>
                 <div className='maze-runner-grid'>
-                    <Board board={this.state.board} handleCellClick={this.handleCellClick.bind(this)}></Board>
+                    <Board board={board}></Board>
                 </div>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    return state;
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onRestartClick: () => {
+            dispatch(restart());
+        },
+        onChangeMode: newMode => {
+            dispatch(changeMode(newMode));
+        }
+    }
+}
+
+const Maze = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MazeComponent);
+
+export default Maze;

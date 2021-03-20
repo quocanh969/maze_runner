@@ -3,7 +3,9 @@ import Cells from '../Cell/Cells';
 import './Board.css';
 import constant from '../../Constants/Config';
 
-export default class Board extends Component {
+import { connect } from 'react-redux';
+
+class BoardComponent extends Component {
     constructor(props) {
         super(props);
     }
@@ -33,3 +35,18 @@ export default class Board extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return state;
+}
+
+const mapDispatchToProps = dispatch => {
+    return {}
+}
+
+const Board = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(BoardComponent);
+
+export default Board;

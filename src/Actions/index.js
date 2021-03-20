@@ -11,3 +11,23 @@ export const addEndPoint = index => {
         end: index,
     }
 }
+
+export const addObstacle = index => {
+    return {
+        type: 'ADD_OBSTACLE_POINT',
+        index,
+    }
+}
+
+export const restart = () => {
+    return {
+        type: 'RESTART'
+    }
+}
+
+export const changeMode = newMode => {
+    return {
+        type: 'CHANGE_MODE',
+        mode: newMode,
+    }
+}
