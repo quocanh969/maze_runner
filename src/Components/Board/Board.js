@@ -6,10 +6,6 @@ import constant from '../../Constants/Config';
 import { connect } from 'react-redux';
 
 class BoardComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     renderCell() {
         var content = [];
         for(let i = 0; i < constant.MAZE_RUNNER_ROW; i++) {

@@ -4,6 +4,7 @@ import Board from '../Board/Board';
 
 import constant from '../../Constants/Config';
 import {restart, changeMode} from '../../Actions/index';
+import dijkstra from '../../Algorithms/Dijkstra';
 
 class MazeComponent extends Component {
 
@@ -13,8 +14,11 @@ class MazeComponent extends Component {
     }
     handleRestartClick() {
         const { onRestartClick } = this.props;
-
         onRestartClick();
+    }
+    handlePathFinding() {
+        const {board, start, end} = this.props;
+        dijkstra(board, start, end);
     }
     render() {
         const {board, mode} = this.props;
@@ -26,7 +30,7 @@ class MazeComponent extends Component {
                     <button onClick={() => {this.handleChangeMode(MODE.OBSTACLE)}}>Add obstacles</button>
                     <button onClick={() => {this.handleChangeMode(MODE.END)}}>Add end point</button>
                     <button onClick={() => {this.handleRestartClick()}}>Restart</button>
-                    <button>Path finding start</button>
+                    <button onClick={() => {this.handlePathFinding()}}>Path finding start</button>
                 </div>
                 <div className='maze-runner-mode-label'>Mode: {mode === 1 ? 'Add start point' : (mode === 2 ? 'Add end point' : 'Add obstacle')}</div>
                 <div className='maze-runner-grid'>
