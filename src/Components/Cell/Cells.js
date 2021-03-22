@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Cells.css';
-import { addStartPoint, addEndPoint, addObstacle } from '../../Actions/index';
+import { addStartPoint, addEndPoint, obstacleDown, obstacleEnter, obstacleUp } from '../../Actions/index';
 import constant from '../../Constants/Config';
 
 class CellsComponent extends Component {
@@ -9,6 +9,9 @@ class CellsComponent extends Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -19,7 +22,7 @@ class CellsComponent extends Component {
     }
 
     handleClick() {
-        const { mode, index, onAddEnd, onAddStart, onAddObstacle } = this.props;
+        const { mode, index, onAddEnd, onAddStart } = this.props;
         switch(mode) {
             case 1: {
                 onAddStart(index);
@@ -29,13 +32,27 @@ class CellsComponent extends Component {
                 onAddEnd(index);
                 break;
             }
-            case 3: {
-                onAddObstacle(index);
-                break;
-            }
             default: break;
         }
 
+    }
+    handleMouseDown() {
+        const { mode, index, onObstacleDown } = this.props;
+        if(mode === 3) {
+            onObstacleDown(index);
+        }
+    }
+    handleMouseEnter() {
+        const { mode, isObstacle, index, onObstacleEnter } = this.props;
+        if(mode === 3 && isObstacle) {
+            onObstacleEnter(index);
+        }
+    }
+    handleMouseUp() {
+        const { mode, onObstacleUp } = this.props;
+        if(mode === 3) {
+            onObstacleUp();
+        }
     }
     render() {
         const { board, index } = this.props;
@@ -65,7 +82,9 @@ class CellsComponent extends Component {
         }
 
         return (
-            <div id={`cell-${index}`} className={`maze-runner-cell ${modeClass}`} onClick={this.handleClick}>
+            <div id={`cell-${index}`} className={`maze-runner-cell ${modeClass}`}
+            onClick={this.handleClick} 
+            onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onMouseEnter={this.handleMouseEnter}>
             </div>
         )
     }
@@ -83,9 +102,15 @@ const mapDispatchToProps = dispatch => {
         onAddEnd: index => {
             dispatch(addEndPoint(index));
         },
-        onAddObstacle: index => {
-            dispatch(addObstacle(index));
-        }
+        onObstacleDown: index => {
+            dispatch(obstacleDown(index));
+        },
+        onObstacleEnter: index => {
+            dispatch(obstacleEnter(index));
+        },
+        onObstacleUp: () => {
+            dispatch(obstacleUp());
+        },
     }
 }
 

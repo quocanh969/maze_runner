@@ -12,10 +12,23 @@ export const addEndPoint = index => {
     }
 }
 
-export const addObstacle = index => {
+export const obstacleDown = index => {
     return {
-        type: 'ADD_OBSTACLE_POINT',
+        type: 'OBSTACLE_DOWN',
         index,
+    }
+}
+
+export const obstacleEnter = index => {
+    return {
+        type: 'OBSTACLE_ENTER',
+        index,
+    }
+}
+
+export const obstacleUp = index => {
+    return {
+        type: 'OBSTACLE_UP',
     }
 }
 

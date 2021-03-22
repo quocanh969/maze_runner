@@ -5,7 +5,7 @@ const initState = {
     board: Array(MAZE_RUNNER_ROW*MAZE_RUNNER_COL).fill(MODE.NORMAL),
     start: -1,
     end: -1,
-    obstacles: [],
+    isObstacle: false,
 }
 
 const rootReducer = (state = initState, action) => {
@@ -13,7 +13,7 @@ const rootReducer = (state = initState, action) => {
         case 'ADD_START_POINT': {
             const temp = [...state.board];
             temp[action.start] = MODE.START;
-            if(state.start !== -1) {
+            if(state.start !== action.start) {
                 temp[state.start] = MODE.NORMAL;
             }
             return {
@@ -25,7 +25,7 @@ const rootReducer = (state = initState, action) => {
         case 'ADD_END_POINT': {
             const temp = [...state.board];
             temp[action.end] = MODE.END;
-            if(state.end !== -1) {
+            if(state.end !== action.end) {
                 temp[state.end] = MODE.NORMAL;
             }
             return {
@@ -34,17 +34,35 @@ const rootReducer = (state = initState, action) => {
                 board: temp,
             }
         }
-        case 'ADD_OBSTACLE_POINT': {
+        case 'OBSTACLE_DOWN': {
             const temp = [...state.board];
             if(temp[action.index] === MODE.OBSTACLE) {
                 temp[action.index] = MODE.NORMAL;
             } else {
                 temp[action.index] = MODE.OBSTACLE;
             }
-            state.obstacles.push(action.index);
             return {
                 ...state,
                 board: temp,
+                isObstacle: true,
+            }
+        }
+        case 'OBSTACLE_ENTER': {
+            const temp = [...state.board];
+            if(temp[action.index] === MODE.OBSTACLE) {
+                temp[action.index] = MODE.NORMAL;
+            } else {
+                temp[action.index] = MODE.OBSTACLE;
+            }
+            return {
+                ...state,
+                board: temp,
+            }
+        }
+        case 'OBSTACLE_UP': {
+            return {
+                ...state,
+                isObstacle: false,
             }
         }
         case 'CHANGE_MODE': {
