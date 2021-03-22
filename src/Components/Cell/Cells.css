@@ -19,3 +19,11 @@
 .maze-runner-cell-obstacle {
     background-color: gray;
 }
+
+.maze-runner-cell-visited {
+    background-color: lightblue;
+}
+
+.maze-runner-cell-shortest-path {
+    background-color: blue;
+}

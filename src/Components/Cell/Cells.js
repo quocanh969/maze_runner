@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Cells.css';
 import { addStartPoint, addEndPoint, addObstacle } from '../../Actions/index';
+import constant from '../../Constants/Config';
 
 class CellsComponent extends Component {
     constructor(props) {
@@ -40,27 +41,31 @@ class CellsComponent extends Component {
         const { board, index } = this.props;
         var modeClass = '';
         switch(board[index]) {
-            case 0: {
+            case constant.MODE.NORMAL: {
                 modeClass = '';
                 break;
             }
-            case 1: {
+            case constant.MODE.START: {
                 modeClass = 'maze-runner-cell-start';
                 break;
             }
-            case 2: {
+            case constant.MODE.END: {
                 modeClass = 'maze-runner-cell-end';
                 break;
             }
-            case 3: {
+            case constant.MODE.OBSTACLE: {
                 modeClass = 'maze-runner-cell-obstacle';
+                break;
+            }
+            case constant.MODE.VISITED: {
+                modeClass = 'maze-runner-cell-visited';
                 break;
             }
             default: break;
         }
 
         return (
-            <div className={`maze-runner-cell ${modeClass}`} onClick={this.handleClick}>
+            <div id={`cell-${index}`} className={`maze-runner-cell ${modeClass}`} onClick={this.handleClick}>
             </div>
         )
     }
